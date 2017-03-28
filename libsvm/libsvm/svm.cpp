@@ -43,8 +43,8 @@ static void print_string_stdout(const char *s)
 	fputs(s,stdout);
 	fflush(stdout);
 }
+#if DEBUG
 static void (*svm_print_string) (const char *) = &print_string_stdout;
-#if 1
 static void info(const char *fmt,...)
 {
 	char buf[BUFSIZ];
@@ -55,7 +55,9 @@ static void info(const char *fmt,...)
 	(*svm_print_string)(buf);
 }
 #else
+void print_null(const char *s) {}
 static void info(const char *fmt,...) {}
+static void (*svm_print_string) (const char *) = &print_null;
 #endif
 
 //
